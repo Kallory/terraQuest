@@ -3,7 +3,7 @@ import random
 
 def randomize_attributes():
     """Generate a dictionary of random attributes."""
-    return {
+    attributes = {
         'Curiosity': random.randint(1, 100),
         'Temperance': random.randint(1, 100),
         'Passion': random.randint(1, 100),
@@ -18,9 +18,15 @@ def randomize_attributes():
         'Charisma': random.randint(1, 100),
         'Patience': random.randint(1, 100),
         'Adaptability': random.randint(1, 100),
-        'Alertness': random.randint(1, 100)
+        'Alertness': random.randint(1, 100),
+        'Long-Term Memory': random.randint(1, 100),
+        'Short-Term Memory': random.randint(1, 100)
     }
 
+    #composite attributes
+    attributes['Intellect'] = (attributes['Long-Term Memory'] + attributes['Curiosity'] + attributes['Focus']) // 3
+
+    return attributes
 
 class Person:
     def __init__(self, name, attributes=None, natural_mother=None, natural_father=None):
@@ -52,6 +58,21 @@ class Person:
 
         self.physical_energy = 100
         self.mental_energy = 100
+
+
+    def calculate_initial_skills(self):
+        skills = {}
+
+        # Define the attribute weights for each skill
+        skill_weights = {
+            'Navigation': {'Intuition': 0.25, 'Focus': 0.2, 'Adaptability': 0.3, 'Luck': 0.2},
+            'Observation': {'Curiosity': 0.1, 'Luck': 0.1, 'Intuition': 0.25, 'Focus': 0.25, 'Alertness': 0.3},
+            'Resource Identification': {'Curiosity': 0.3, 'Intuition': 0.4, 'Observation': 0.3},
+            'Basic Tool Use': {'Dexterity': 0.5, 'Creativity': 0.3, 'Focus': 0.2},
+            'Basic Communication': {'Charisma': 0.5, 'Empathy': 0.3, 'Focus': 0.2},
+            'Stamina Management': {'Resilience': 0.4, 'Patience': 0.3, 'Adaptability': 0.3},
+            'Basic Shelter Seeking': {'Observation': 0.4, 'Adaptability': 0.4, 'Intuition': 0.2}
+        }
 
 
     def inherit_attributes(self, parent1, parent2):
